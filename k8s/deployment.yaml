@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo  # Matches Service Selector
+    spec:
+      containers:
+      - name: devops-project
+        image: muthusuresh5/devops-demo-project:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000  # Application Port
