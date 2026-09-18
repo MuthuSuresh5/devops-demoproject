@@ -1,0 +1,4 @@
+image:
+  repository: muthusuresh5/devops-demo-project
+  tag: latest
+  pullPolicy: IfNotPresent

@@ -15,6 +15,6 @@ spec:
       containers:
       - name: devops-project
         image: muthusuresh5/devops-demo-project:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000  # Application Port
