@@ -53,10 +53,10 @@ pipeline {
             steps {
                 echo 'Creating Terraform execution plan...'
 
-                sh '''
-                    terraform plan \
-                    -out=tfplan
-                '''
+                dir('devops-infrastructure') {
+                    sh 'terraform init'
+                    sh 'terraform plan -out=tfplan'
+                }
             }
         }
 
@@ -67,11 +67,9 @@ pipeline {
             steps {
                 echo 'Applying Terraform infrastructure...'
 
-                sh '''
-                    terraform apply \
-                    -auto-approve \
-                    tfplan
-                '''
+                dir('devops-infrastructure') {
+                    sh 'terraform apply -auto-approve tfplan'
+                }
             }
         }
 
