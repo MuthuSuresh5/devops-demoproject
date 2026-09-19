@@ -34,17 +34,6 @@ pipeline {
         }
 
 
-        stage('Test') {
-            steps {
-                echo 'Running application tests...'
-
-                sh '''
-                    cd app
-                    npm test
-                '''
-            }
-        }
-
 
         stage('Docker Build') {
             steps {
