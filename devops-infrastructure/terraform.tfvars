@@ -1,12 +1,12 @@
-aws_region = "ap-south-1"
+aws_region = "us-east-1"
 
 project_name = "devops-demo"
 
 vpc_cidr = "10.0.0.0/16"
 
 availability_zones = [
-  "ap-south-1a",
-  "ap-south-1b"
+  "us-east-1a",
+  "us-east-1b"
 ]
 
 public_subnets = [
