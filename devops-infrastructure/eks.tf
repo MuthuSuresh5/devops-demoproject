@@ -15,6 +15,7 @@ module "eks" {
   eks_managed_node_groups = {
     devops_nodes = {
       name           = "${var.project_name}-nodes"
+      ami_type       = "AL2023_x86_64_STANDARD"
       instance_types = var.eks_node_instance_types
       capacity_type  = "ON_DEMAND"
 
