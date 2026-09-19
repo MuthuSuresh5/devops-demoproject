@@ -41,8 +41,8 @@ pipeline {
 
                 sh '''
                     docker build \
-                    -t ${DOCKER_IMAGE}:${BUILD_NUMBER} \
-                    -t ${DOCKER_IMAGE}:latest \
+                    -t muthusuresh5/devops-app:${BUILD_NUMBER} \
+                    -t muthusuresh5/devops-app:latest \
                     .
                 '''
             }
@@ -68,9 +68,9 @@ pipeline {
                         -u "$DOCKER_USERNAME" \
                         --password-stdin
 
-                        docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
+                        docker push muthusuresh5/devops-app:${BUILD_NUMBER}
 
-                        docker push ${DOCKER_IMAGE}:latest
+                        docker push muthusuresh5/devops-app:latest
 
                         docker logout
                     '''
