@@ -1,17 +1,15 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 21.0"
+  version = "~> 20.0"
 
-  # Use cluster_name instead of name
   cluster_name    = "${var.project_name}-eks"
-  
-  # Explicitly set cluster version to fix the "Invalid count argument" error
   cluster_version = "1.30"
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
-  endpoint_public_access                   = true
+  # Fixed argument name for public access
+  cluster_endpoint_public_access           = true
   enable_cluster_creator_admin_permissions = true
 
   eks_managed_node_groups = {
