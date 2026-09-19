@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "YOUR_DOCKERHUB_USERNAME/devops-app"
+        DOCKER_IMAGE = "muthusuresh5/devops-app"
     }
 
     options {
