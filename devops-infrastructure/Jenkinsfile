@@ -1,5 +1,4 @@
 pipeline {
-
     agent any
 
     options {
@@ -8,86 +7,61 @@ pipeline {
     }
 
     stages {
-
         stage('Checkout') {
             steps {
-                echo 'Checking out Terraform repository...'
-
+                echo 'Checking out repository...'
                 checkout scm
             }
         }
 
-
-        stage('Terraform Version') {
+        stage('Terraform Version & Init') {
             steps {
-                sh '''
-                    terraform version
-                '''
+                dir('devops-infrastructure') {
+                    echo 'Initializing Terraform...'
+                    sh 'terraform version'
+                    sh 'terraform init'
+                }
             }
         }
-
-
-        stage('Terraform Init') {
-            steps {
-                echo 'Initializing Terraform...'
-
-                sh '''
-                    terraform init
-                '''
-            }
-        }
-
 
         stage('Terraform Validate') {
             steps {
-                echo 'Validating Terraform configuration...'
-
-                sh '''
-                    terraform validate
-                '''
+                dir('devops-infrastructure') {
+                    echo 'Validating Terraform configuration...'
+                    sh 'terraform validate'
+                }
             }
         }
 
-
         stage('Terraform Plan') {
             steps {
-                echo 'Creating Terraform execution plan...'
-
                 dir('devops-infrastructure') {
-                    sh 'terraform init'
+                    echo 'Creating Terraform execution plan...'
                     sh 'terraform plan -out=tfplan'
                 }
             }
         }
 
-
-
-
         stage('Terraform Apply') {
             steps {
-                echo 'Applying Terraform infrastructure...'
-
                 dir('devops-infrastructure') {
+                    echo 'Applying Terraform infrastructure...'
                     sh 'terraform apply -auto-approve tfplan'
                 }
             }
         }
 
-
         stage('Terraform Output') {
             steps {
-                echo 'Terraform outputs:'
-
-                sh '''
-                    terraform output
-                '''
+                dir('devops-infrastructure') {
+                    echo 'Fetching Terraform outputs...'
+                    sh 'terraform output'
+                }
             }
         }
     }
 
-
     post {
-
         success {
             echo '''
             ========================================
@@ -106,7 +80,7 @@ pipeline {
 
         always {
             archiveArtifacts(
-                artifacts: 'tfplan',
+                artifacts: 'devops-infrastructure/tfplan',
                 allowEmptyArchive: true
             )
         }
